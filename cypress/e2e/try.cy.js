@@ -64,5 +64,28 @@ describe('My First Test', () => {
     // cy.get('span').should('have.class', 'Avatar1 Avatar--regular Avatar--primary')
         // cy.contains('button')
         // cy.get('Preview')
+
+
+        // MAIN PAGE
+
+        // cy.get('#search Links')
+        // .first()
+        // .invoke('attr', 'href')
+        // .then((href) => console.log(href));
+
+        // cy.get('.d-flex.justify-content-start.align-items-center').each((item) => {
+        //     cy.contains('a').should("not.have.attr", "href", "#undefined");
+        // })
+
+        // cy.get("a:contains(#)").each($a => {
+        //     const message = $a.parent().parent().text();
+        //     expect($a, message).to.not.have.attr("href", "#undefined");
+        // })
+
+        // cy.get('.d-flex.justify-content-start.align-items-center').each((item) => {
+        //     item.contains('a').each((link) => {
+        //         cy.visit(link.attr('href'));
+        //     })
+        // })
     })
 })
