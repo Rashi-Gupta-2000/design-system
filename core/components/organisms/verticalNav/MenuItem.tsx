@@ -25,6 +25,7 @@ interface MenuLabelProps {
   label: string;
   disabled?: boolean;
   isActive: boolean;
+  link: string | undefined;
 }
 
 interface MenuIconProps {
@@ -33,6 +34,7 @@ interface MenuIconProps {
 
 const MenuLabel = (props: MenuLabelProps) => {
   const { label, disabled, isActive } = props;
+
   return (
     <Text data-test="DesignSystem-VerticalNav--Text" appearance={getTextAppearance(isActive, disabled)}>
       {label}
@@ -105,7 +107,7 @@ export const MenuItem = (props: MenuItemProps) => {
   const customItemProps = {
     ...props,
     MenuIcon: () => MenuIcon({ isChildrenVisible }),
-    MenuLabel: () => MenuLabel({ label: menu.label, disabled: menu.disabled, isActive: isActive }),
+    MenuLabel: () => MenuLabel({ label: menu.label, disabled: menu.disabled, isActive: isActive, link: menu.link }),
     MenuPills: () =>
       menu.count !== undefined ? MenuPills({ disabled: menu.disabled, isActive: isActive, count: menu.count }) : <></>,
   };
@@ -125,7 +127,7 @@ export const MenuItem = (props: MenuItemProps) => {
             appearance={getIconAppearance(isActive, menu.disabled)}
           />
         )}
-        {expanded && <MenuLabel label={menu.label} disabled={menu.disabled} isActive={isActive} />}
+        {expanded && <MenuLabel label={menu.label} disabled={menu.disabled} isActive={isActive} link={menu.link} />}
       </div>
       {expanded && renderSubMenu()}
     </div>
@@ -135,5 +137,3 @@ export const MenuItem = (props: MenuItemProps) => {
 MenuItem.defaultProps = {
   isActive: false,
 };
-
-export default MenuItem;
