@@ -118,9 +118,8 @@ export const VerticalNav = (props: VerticalNavProps) => {
     }
   };
 
-  const onClickHandler = (menu: Menu, e: React.MouseEvent<HTMLElement>) => {
-    console.log(e, menu);
-    e.preventDefault();
+  const onClickHandler = (ev: { preventDefault: () => void }) => {
+    ev.preventDefault();
     if (menu.subMenu) {
       if (!expanded) {
         if (onClick) onClick(menu.subMenu[0]);
