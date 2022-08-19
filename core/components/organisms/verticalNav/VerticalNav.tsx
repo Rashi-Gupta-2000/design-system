@@ -4,8 +4,7 @@ import { Text, Tooltip } from '@/index';
 import { MenuItem, MenuItemProps } from './MenuItem';
 import { BaseProps, extractBaseProps } from '@/utils/types';
 import { getMenu, isMenuActive, ActiveMenu, Menu } from '@/utils/navigationHelper';
-import GenericText from '@/components/atoms/_text';
-
+import { default as ItemLink } from '@/components/atoms/_text';
 export interface VerticalNavProps extends BaseProps {
   /**
    * List of menus to be rendered
@@ -69,6 +68,22 @@ export interface VerticalNavProps extends BaseProps {
  * ####NOTE: VerticalNav sets first subMenu(if present) active if the Navigation is collapsed.
  */
 
+// interface WelcomeProps {
+
+// }
+
+// const Welcome: React.FC<WelcomeProps> = (props) => <h1>Hello, {props.name}</h1>;
+
+// const MenuItem2 = (props) => {
+//   return (
+//     <MenuItem
+//       {props.data-test ? {data-test="DesignSystem-VerticalNav--Item"}:}
+//       {props.key ? id : }
+
+//     />
+//   )
+// };
+
 export const VerticalNav = (props: VerticalNavProps) => {
   const { menus, active, onClick, expanded, rounded, autoCollapse, className, customItemRenderer, showTooltip } = props;
 
@@ -103,7 +118,9 @@ export const VerticalNav = (props: VerticalNavProps) => {
     }
   };
 
-  const onClickHandler = (menu: Menu) => {
+  const onClickHandler = (menu: Menu, e: React.MouseEvent<HTMLElement>) => {
+    console.log(e, menu);
+    e.preventDefault();
     if (menu.subMenu) {
       if (!expanded) {
         if (onClick) onClick(menu.subMenu[0]);
@@ -134,12 +151,13 @@ export const VerticalNav = (props: VerticalNavProps) => {
         ['Text--default']: !menu.disabled && !isActive,
       });
 
-      const onItemHandler = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-      };
+      // const onItemHandler = (e: React.MouseEvent<HTMLElement>) => {
+      //   e.preventDefault();
+      // };
 
       const labelProps = {
-        onClick: (e: React.MouseEvent<HTMLElement>) => onItemHandler(e),
+        // onClick: (e: React.MouseEvent<HTMLElement>) => onItemHandler(e),
+        onClick: (menu: Menu, e: React.MouseEvent<HTMLElement>) => onClickHandler(menu, e),
         href: menu.link,
       };
 
@@ -154,7 +172,7 @@ export const VerticalNav = (props: VerticalNavProps) => {
           )}
           {showTooltip ? (
             <Tooltip tooltip={menu.label} position="right">
-              <GenericText componentType="a" className={LabelClass} {...labelProps}>
+              <ItemLink componentType="a" className={LabelClass} {...labelProps}>
                 <MenuItem
                   data-test="DesignSystem-VerticalNav--Item"
                   menu={menu}
@@ -164,13 +182,13 @@ export const VerticalNav = (props: VerticalNavProps) => {
                   isChildren={false}
                   rounded={rounded}
                   isChildrenVisible={isChildrenVisible}
-                  onClick={onClickHandler}
+                  // onClick={onClickHandler}
                   customItemRenderer={customItemRenderer}
                 />
-              </GenericText>
+              </ItemLink>
             </Tooltip>
           ) : (
-            <GenericText componentType="a" className={LabelClass} {...labelProps}>
+            <ItemLink componentType="a" className={LabelClass} {...labelProps}>
               <MenuItem
                 data-test="DesignSystem-VerticalNav--Item"
                 menu={menu}
@@ -180,17 +198,17 @@ export const VerticalNav = (props: VerticalNavProps) => {
                 isChildren={false}
                 rounded={rounded}
                 isChildrenVisible={isChildrenVisible}
-                onClick={onClickHandler}
+                // onClick={onClickHandler}
                 customItemRenderer={customItemRenderer}
               />
-            </GenericText>
+            </ItemLink>
           )}
           {menuState[menu.name] &&
             menu.subMenu &&
             menu.subMenu.map((subMenu, id) => {
               return showTooltip ? (
                 <Tooltip tooltip={subMenu.label} position="right">
-                  <GenericText componentType="a" className={LabelClass} {...labelProps}>
+                  <ItemLink componentType="a" className={LabelClass} {...labelProps}>
                     <MenuItem
                       key={id}
                       menu={subMenu}
@@ -198,14 +216,14 @@ export const VerticalNav = (props: VerticalNavProps) => {
                       hasSubmenu={false}
                       isChildren={true}
                       rounded={rounded}
-                      onClick={onClickHandler}
+                      // onClick={onClickHandler}
                       isActive={isMenuActive(menus, subMenu, active)}
                       customItemRenderer={customItemRenderer}
                     />
-                  </GenericText>
+                  </ItemLink>
                 </Tooltip>
               ) : (
-                <GenericText componentType="a" className={LabelClass} {...labelProps}>
+                <ItemLink componentType="a" className={LabelClass} {...labelProps}>
                   <MenuItem
                     key={id}
                     menu={subMenu}
@@ -213,11 +231,11 @@ export const VerticalNav = (props: VerticalNavProps) => {
                     hasSubmenu={false}
                     isChildren={true}
                     rounded={rounded}
-                    onClick={onClickHandler}
+                    // onClick={onClickHandler}
                     isActive={isMenuActive(menus, subMenu, active)}
                     customItemRenderer={customItemRenderer}
                   />
-                </GenericText>
+                </ItemLink>
               );
             })}
         </React.Fragment>
