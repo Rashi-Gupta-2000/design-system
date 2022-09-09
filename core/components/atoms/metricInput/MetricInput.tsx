@@ -3,10 +3,13 @@ import classNames from 'classnames';
 import { Icon, Text } from '@/index';
 import { BaseHtmlProps, BaseProps, extractBaseProps } from '@/utils/types';
 import { AutoComplete } from '@/common.type';
+// import Button from '../button';
 
 export type MetricInputSize = 'regular' | 'large';
+export type MetricAppearance = 'basic' | 'primary' | 'success' | 'alert' | 'transparent';
 
 export interface MetricInputProps extends BaseProps, BaseHtmlProps<HTMLInputElement> {
+  appearance?: MetricAppearance;
   /**
    * Name of the `MetricInput`
    */
@@ -106,6 +109,7 @@ const capMax = (max = +Infinity, value: number) =>
 export const MetricInput = React.forwardRef<HTMLInputElement, MetricInputProps>((props, forwardedRef) => {
   const {
     size = 'regular',
+    // appearance,
     defaultValue,
     name,
     placeholder,
@@ -173,6 +177,11 @@ export const MetricInput = React.forwardRef<HTMLInputElement, MetricInputProps>(
       ['MetricInput-arrowIcon']: true,
       [`MetricInput-arrowIcon--${size}`]: size,
       [`MetricInput-arrowIcon--${direction}`]: direction,
+      ['MI']: true,
+      // ['Button-icon']: true,
+      ['MI--basic']: true,
+      // [`Button--${appearance}`]: appearance,
+      // ['Button--selected']: selected && appearance === 'basic',
     });
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -294,6 +303,8 @@ export const MetricInput = React.forwardRef<HTMLInputElement, MetricInputProps>(
           name="keyboard_arrow_up"
           onClick={(e) => onArrowClick(e, 'up')}
           data-test="DesignSystem-MetricInput--upIcon"
+          appearance={disabled ? 'disabled' : 'basic'}
+          // appearance={!value ? 'basic' : 'disabled'}
         />
         <Icon
           tabIndex={-1}
@@ -303,6 +314,8 @@ export const MetricInput = React.forwardRef<HTMLInputElement, MetricInputProps>(
           onClick={(e) => onArrowClick(e, 'down')}
           data-test="DesignSystem-MetricInput--downIcon"
         />
+        {/* <Button appearance="basic" size="tiny" icon="keyboard_arrow_up" />
+        <Button appearance="basic" size="tiny" icon="keyboard_arrow_down" /> */}
       </div>
     </div>
   );
